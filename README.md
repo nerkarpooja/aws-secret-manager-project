@@ -173,16 +173,14 @@ Attach policy allowing access to the secret.
 
 ```json
 {
- "Version": "2012-10-17",
- "Statement": [
-  {
-   "Effect": "Allow",
-   "Action": [
-    "secretsmanager:GetSecretValue"
-   ],
-   "Resource": "arn:aws:secretsmanager:*:*:secret:my-app/db-creds*"
-  }
- ]
+        "Version": "2012-10-17",
+        "Statement": [
+                {
+                        "Effect": "Allow",
+                        "Action": "secretsmanager:GetSecretValue",
+                        "Resource": "arn:aws:secretsmanager:ap-south-1:048648751037:secret:my-app/db-creds-jlO6Eh"
+                }
+        ]
 }
 ```
 
@@ -243,16 +241,14 @@ nano app_insecure.py
 ## Insecure Code
 
 ```python
-print("------------------------------------")
+print("-----------------------------------------")
 print("INSECURE APPLICATION")
-print("------------------------------------")
+print("-----------------------------------------")
+
+db_password = "pass@1234"
 
 print("Connecting to database...")
-
-DB_PASSWORD = "pass@1234"
-
-print("DATABASE PASSWORD:", DB_PASSWORD)
-
+print(f"DATABASE PASSWORD: {db_password}")
 print("Connection successful (but insecure)")
 ```
 
@@ -301,36 +297,55 @@ nano app_secure.py
 ```python
 import boto3
 import json
+from botocore.exceptions import ClientError
 
 print("----- SECURE APPLICATION -----")
 
-secret_name = "my-app/db-creds"
-region_name = "ap-south-1"
+# Use full Secret ARN (recommended)
+SECRET_ARN = "arn:aws:secretsmanager:ap-south-1:048648751037:secret:my-app/db-creds-jlO6Eh"
+REGION = "ap-south-1"
 
-client = boto3.client(
-    service_name="secretsmanager",
-    region_name=region_name
-)
 
+def get_secret():
+    """
+    Fetch secret from AWS Secrets Manager using IAM Role.
+    No access keys are required.
+    """
+    try:
+        client = boto3.client(
+            service_name="secretsmanager",
+            region_name=REGION
+        )
+
+        response = client.get_secret_value(
+            SecretId=SECRET_ARN
+        )
+
+        secret = json.loads(response["SecretString"])
+        return secret
+
+    except ClientError as e:
+        print("ERROR: Unable to retrieve secret.")
+        print(f"Details: {e}")
+        raise e
+
+
+# ---- Application Execution ----
 try:
+    credentials = get_secret()
 
-    response = client.get_secret_value(
-        SecretId=secret_name
-    )
+    db_username = credentials.get("db_username")
+    db_password = credentials.get("db_password")
 
-    secret = response["SecretString"]
-    secret_dict = json.loads(secret)
-
-    username = secret_dict["username"]
-    password = secret_dict["password"]
-
-    print("-----------------------------")
-    print("SUCCESS : Secret Retrieved Securely")
+    print("-----------------------------------------")
+    print("SUCCESS: Secret Retrieved Securely")
     print("Application is using IAM Role authentication")
     print("Database credentials loaded successfully")
+    print("-----------------------------------------")
 
 except Exception as e:
-    print("Error retrieving secret:", str(e))
+    print("APPLICATION FAILED")
+    print(f"Error: {e}")
 ```
 
 Run secure application
