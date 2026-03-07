@@ -106,7 +106,7 @@ Version: 1.42.59
 
 ### Screenshot
 
-(Add Screenshot Here)
+
 
 Python and Boto3 Verification
 
