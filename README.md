@@ -72,12 +72,7 @@ ssh -i key.pem ec2-user@public-ip
 ```
 
 ---
-
-### Screenshot
-
-(Add Screenshot Here)
-
-EC2 Instance Details
+![EC2 Instance Running](images/ec2-instance.png)
 
 ---
 
@@ -106,7 +101,9 @@ Version: 1.42.59
 
 ### Screenshot
 
+### Screenshot
 
+![Python and Boto3 Verification](images/python-boto3-verification.png)
 
 Python and Boto3 Verification
 
@@ -145,7 +142,7 @@ Click **Store**.
 
 ### Screenshot
 
-(Add Screenshot Here)
+![Secret Created in AWS Secrets Manager](images/secret-created.png)
 
 Secrets Manager Secret Created
 
@@ -194,7 +191,7 @@ EC2-Secrets-Manager-Role
 
 ### Screenshot
 
-(Add Screenshot Here)
+![IAM Role Created](images/iam-role-created.png)
 
 IAM Role Created
 
@@ -220,7 +217,8 @@ Now EC2 can securely retrieve secrets **without using access keys**.
 
 ### Screenshot
 
-(Add Screenshot Here)
+
+![IAM Role Attached to EC2](images/iam-role-attached.png)
 
 IAM Role Attached to EC2
 
@@ -274,7 +272,7 @@ Connection successful (but insecure)
 
 ### Screenshot
 
-(Add Screenshot Here)
+![Insecure Application Output](images/insecure-output.png)
 
 Hardcoded password displayed in terminal
 
@@ -368,7 +366,7 @@ Database credentials loaded successfully
 
 ### Screenshot
 
-(Add Screenshot Here)
+![Secure Application Output](images/secure-output.png)
 
 Secure secret retrieval output
 
