@@ -16,7 +16,7 @@ The application is demonstrated in two stages:
 
 # Architecture Diagram
 
-![Architecture Diagram](secrect-manager-project-arch-diag.png)
+![Architecture Diagram](architecture-diagram.png)
 
 ### Architecture Explanation
 
