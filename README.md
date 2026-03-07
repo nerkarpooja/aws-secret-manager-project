@@ -16,7 +16,7 @@ The application is demonstrated in two stages:
 
 # Architecture Diagram
 
-![Architecture Diagram](architecture-diagram.png)
+![Architecture Diagram](images/architecture-diagram.png)
 
 ### Architecture Explanation
 
