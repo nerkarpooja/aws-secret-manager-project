@@ -101,7 +101,6 @@ Version: 1.42.59
 
 ### Screenshot
 
-### Screenshot
 
 ![Python and Boto3 Verification](images/python-boto3-verification.png)
 
